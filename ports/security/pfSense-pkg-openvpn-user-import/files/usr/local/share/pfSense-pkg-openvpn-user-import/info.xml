@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<pfsensepkgs>
+    <package>
+        <name>OpenVPN User Import Utility</name>
+        <internal_name>openvpn-user-import</internal_name>
+        <descr><![CDATA[Allows to create VPN users importing from CSV.]]></descr>
+        <version>%%PKGVERSION%%</version>
+        <configurationfile>openvpn-user-import.xml</configurationfile>
+    </package>
+</pfsensepkgs>

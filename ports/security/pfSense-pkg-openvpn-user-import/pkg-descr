@@ -1,0 +1,3 @@
+Allows to create VPN certificates importing from CSV.
+
+The CSV need to contain a line for each one with username.
