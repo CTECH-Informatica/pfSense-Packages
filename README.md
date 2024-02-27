@@ -32,6 +32,13 @@ Do build:
 
 ```shell
 make package -C <package_folder> DISABLE_VULNERABILITIES=yes
+cp <package_folder>/work/pkg/<package>.pkg <repository_folder> 
+```
+
+## Update repository
+
+```shell
+pkg repo <repository_folder>
 ```
 
 ## Add CTECH repository
