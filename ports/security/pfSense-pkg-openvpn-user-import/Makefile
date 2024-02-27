@@ -8,7 +8,7 @@ EXTRACT_ONLY=	# empty
 
 MAINTAINER=	contato@ctech.net.br
 COMMENT=	CTECH package openvpn-user-import
-WWW=	https://github.com/CTECH-Informatica/pfSense-Packages/blob/main/ports/ctech-pkg-openvpn-user-import
+WWW=	https://github.com/CTECH-Informatica/pfSense-Packages/blob/main/ports/security/pfSense-pkg-openvpn-user-import
 
 LICENSE=	APACHE20
 
