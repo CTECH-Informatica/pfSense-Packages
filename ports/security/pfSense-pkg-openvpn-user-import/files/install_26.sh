@@ -25,5 +25,5 @@ if [ "$(uname -m)" != "amd64" ]; then
 fi
 
 if [ "$(cat /etc/version | cut -c 1-3)" == "2.6" ]; then
-	pkg add https://github.com/CTECH-Informatica/pfSense-Packages/raw/main/repo/2.6/CTECH-pkg-openvpn-user-import.txz
+	pkg add https://github.com/CTECH-Informatica/pfSense-Packages/raw/main/repo/2.6/FreeBSD:12:amd64/pfSense-pkg-openvpn-user-import-1.0.0.pkg
 fi
