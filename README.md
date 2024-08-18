@@ -43,8 +43,15 @@ pkg repo <repository_folder>
 
 ## Add CTECH repository
 
+### pfSense 2.7
+
+```shell
+fetch -q -o /usr/local/etc/pkg/repos/pfSense_CTECH.conf https://raw.githubusercontent.com/CTECH-Informatica/pfSense-Packages/main/pfSense_CTECH.conf_27.conf
+```
+
 ### pfSense 2.6
 
 ```shell
 fetch -q -o /usr/local/etc/pkg/repos/pfSense_CTECH.conf https://raw.githubusercontent.com/CTECH-Informatica/pfSense-Packages/main/pfSense_CTECH.conf_26.conf
 ```
+
