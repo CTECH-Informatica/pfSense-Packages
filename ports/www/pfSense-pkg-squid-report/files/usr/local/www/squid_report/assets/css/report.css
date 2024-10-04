@@ -1,0 +1,45 @@
+.spinner {
+    color: #f7a51d;
+    --bs-spinner-width: 5rem;
+    --bs-spinner-height: 5rem;
+    --bs-spinner-border-width: 0.4em
+}
+
+.error-icon {
+    font-size: 4em;
+    color: red;
+}
+
+td {
+    word-wrap: break-word !important;
+    word-break: break-word !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Data */
+#logs th:nth-of-type(1) {
+    max-width: 25vw;
+}
+
+/* Usuário */
+#logs td:nth-of-type(1) {
+    max-width: 20vw;
+}
+
+/* Endereço */
+#logs td:nth-of-type(2) {
+    max-width: 50vw;
+}
+
+/* Status */
+#logs td:nth-of-type(3) {
+    max-width: 10vw;
+}
+
+
+/* Tamanho */
+#logs td:nth-of-type(4) {
+    max-width: 10vw;
+}

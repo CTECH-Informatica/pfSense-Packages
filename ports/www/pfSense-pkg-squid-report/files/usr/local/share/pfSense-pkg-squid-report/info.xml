@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<pfsensepkgs>
+    <package>
+        <name>Squid report</name>
+        <internal_name>squid-report</internal_name>
+        <descr><![CDATA[Squid report is a proxy reporting tool. &lt;strong&gt;Requires Squid package.&lt;/strong&gt;]]></descr>
+        <website>https://ctech.net.br/</website>
+        <pkginfolink/>
+        <version>%%PKGVERSION%%</version>
+        <configurationfile>squid-report.xml</configurationfile>
+        <noembedded>true</noembedded>
+    </package>
+</pfsensepkgs>

@@ -1,0 +1,25 @@
+pkg/squid-report.xml
+pkg/squid-report.inc
+pkg/squid-report-util.inc
+/etc/inc/priv/squidreport.priv.inc
+www/squid_report/index.php
+www/squid_report/report.php
+www/squid_report/ips.php
+www/squid_report/users.php
+www/squid_report/assets/js/axios.min.js
+www/squid_report/assets/js/bootstrap.bundle.min.js
+www/squid_report/assets/js/jquery.min.js
+www/squid_report/assets/js/report.js
+www/squid_report/assets/css/bootstrap-icons.min.css
+www/squid_report/assets/css/bootstrap.min.css
+www/squid_report/assets/css/report.css
+www/squid_report/assets/css/fonts/bootstrap-icons.woff
+www/squid_report/assets/css/fonts/bootstrap-icons.woff2
+www/squid_report/assets/images/favicon.ico
+www/squid_report/assets/images/logo.png
+etc/squid_report/parser.php
+etc/squid_report/optimize_db.php
+etc/squid_report/remove_old.php
+etc/squid_report/squid_report.inc.php
+%%DATADIR%%/info.xml
+@dir /etc/inc/priv

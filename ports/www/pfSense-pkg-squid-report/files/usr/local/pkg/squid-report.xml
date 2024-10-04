@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE packagegui SYSTEM "../schema/packages.dtd">
+<?xml-stylesheet type="text/xsl" href="../xsl/package.xsl"?>
+<packagegui>
+    <copyright>
+        <![CDATA[
+/*
+ * squid-report.xml
+ *
+ * part of CTECH packages for pfSense(R) software
+ * Copyright (c) 2024 CTECH
+ * All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+	]]>
+    </copyright>
+    <name>squidreport</name>
+    <version>0.1.0.0</version>
+    <title>Squid Report: Settings</title>
+    <category>Status</category>
+    <include_file>/usr/local/pkg/squid-report.inc</include_file>
+    <menu>
+        <name>Squid Report</name>
+        <tooltiptext>Squid report configuration</tooltiptext>
+        <section>Services</section>
+        <url>/pkg_edit.php?xml=squid-report.xml</url>
+    </menu>
+    <service>
+        <name>squid_report</name>
+        <rcfile>squid_report_nginx.sh</rcfile>
+        <executable>squid_report_nginx</executable>
+        <description>Squid Report Web Server</description>
+    </service>
+    <fields>
+        <field>
+            <name>Instructions</name>
+            <type>listtopic</type>
+        </field>
+        <field>
+            <type>info</type>
+            <fielddescr>
+                <![CDATA[
+				Perform these steps after install
+				]]>
+            </fielddescr>
+            <description>
+                <![CDATA[
+				<strong><span class="text-danger">IMPORTANT: </span>Click Info and follow the instructions below if this is initial install!</strong>
+				<div class="infoblock"><ol type="1">
+				<li>
+					<strong><span class="text-info">Enable and configure Squid logging</span></strong><br/>
+					Check 'Enable Access Logging' and configure 'Log Store Directory' on <a href="/pkg_edit.php?xml=squid.xml">Squid Proxy Server > General</a> page.<br/>
+					Important: Leave the 'Log Store Directory' at default <code>/var/squid/logs</code> value.<br/><br/>
+				</li>
+				<li>
+					<strong><span class="text-info">Configure the report</span></strong><br/>
+					Complete the setting sections below and <strong>Save when finished.</strong><br/><br/>
+				</li>
+				<li>
+					<strong><span class="text-info">Create initial reports</span></strong><br/>
+					Connect using SSH to the pfSense and execute the below to create initial reports.<br/>
+					<pre>/usr/local/bin/php /usr/local/etc/squid_report/parser.php --full</pre>
+				</li>
+				</ol></div>
+				]]>
+            </description>
+        </field>
+        <field>
+            <name>Web Service Settings</name>
+            <type>listtopic</type>
+        </field>
+        <field>
+            <fielddescr>Enable Squid report</fielddescr>
+            <fieldname>squid_report_enable</fieldname>
+            <type>checkbox</type>
+            <default_value>off</default_value>
+            <description><![CDATA[Enable or disable report.]]></description>
+        </field>
+        <field>
+            <fielddescr>Report Web Port</fielddescr>
+            <fieldname>squid_report_port</fieldname>
+            <description>
+                <![CDATA[
+				Port the nginx web server for report will listen on.<br>
+				Default: <strong>7777</strong><br>
+				Do not forget to disable web gui redirect on system advanced settings,
+				]]>
+            </description>
+            <type>input</type>
+            <size>5</size>
+            <default_value>7777</default_value>
+            <required/>
+        </field>
+        <field>
+            <fielddescr>Report Web User</fielddescr>
+            <fieldname>squid_report_user</fieldname>
+            <description>
+                <![CDATA[
+				Username used to access report.<br>
+				Default: <strong>squid</strong><br>
+				]]>
+            </description>
+            <type>input</type>
+            <size>20</size>
+            <default_value>squid</default_value>
+            <required/>
+        </field>
+        <field>
+            <fielddescr>Report Web Password</fielddescr>
+            <fieldname>squid_report_password</fieldname>
+            <description>
+                <![CDATA[
+				Password used to access report.<br>
+				Default: <strong>report</strong><br>
+				]]>
+            </description>
+            <type>password</type>
+            <size>32</size>
+            <default_value>report</default_value>
+            <required/>
+        </field>
+        <field>
+            <type>info</type>
+            <fielddescr>Links</fielddescr>
+            <description>
+                <![CDATA[
+				<button type="submit" class="btn btn-info" name="navto_squid_report" id="navto_squid_report" value="Access report"><i class="fa-solid fa-right-to-bracket fa fa-sign-in icon-embed-btn"></i>Access report</button>
+				]]>
+            </description>
+        </field>
+
+        <field>
+            <name>Reporting settings</name>
+            <type>listtopic</type>
+        </field>
+        <field>
+            <fielddescr>Report logs days to retain</fielddescr>
+            <fieldname>squid_report_logs_retain</fieldname>
+            <description>
+                <![CDATA[
+				How many days of log data is retained and available to view.<br>
+				Default: <strong>60</strong><br>
+				Use with caution, many days means more space in use and performance degradation,
+				]]>
+            </description>
+            <type>input</type>
+            <size>3</size>
+            <default_value>60</default_value>
+            <required/>
+        </field>
+
+        <field>
+            <name>Reporting Scheduler</name>
+            <type>listtopic</type>
+        </field>
+        <field>
+            <fielddescr>Refresh Scheduler</fielddescr>
+            <fieldname>squid_report_refreshsheduler_time</fieldname>
+            <description>
+                <![CDATA[
+				Select data refresh period. The reporting task will be executed every XX minutes/hours.<br/>
+				<span class="text-info">
+				<strong>Legend:</strong>
+				&nbsp;&nbsp; (!)(*) &nbsp; Use only with fast hardware
+				&nbsp;&nbsp; (+) &nbsp; Recommended values
+				</span>
+				]]>
+            </description>
+            <type>select</type>
+            <default_value>lhp_60m</default_value>
+            <options>
+                <option><name>10min (!)</name><value>lhp_10m</value></option>
+                <option><name>20min (!)</name><value>lhp_20m</value></option>
+                <option><name>30min (!)</name><value>lhp_30m</value></option>
+                <option><name>40min (*)</name><value>lhp_40m</value></option>
+                <option><name>50min (*)</name><value>lhp_50m</value></option>
+                <option><name>60min (+)</name><value>lhp_60m</value></option>
+                <option><name>2h</name><value>lhp_2h</value></option>
+                <option><name>3h</name><value>lhp_3h</value></option>
+                <option><name>4h</name><value>lhp_4h</value></option>
+                <option><name>6h</name><value>lhp_6h</value></option>
+                <option><name>8h</name><value>lhp_8h</value></option>
+                <option><name>12h</name><value>lhp_12h</value></option>
+                <option><name>24h</name><value>lhp_24h</value></option>
+            </options>
+        </field>
+    </fields>
+    <custom_php_install_command>
+        squid_report_install();
+    </custom_php_install_command>
+    <custom_php_deinstall_command>
+        squid_report_deinstall();
+    </custom_php_deinstall_command>
+    <custom_php_validation_command>
+        squid_report_validate_input($_POST, $input_errors);
+    </custom_php_validation_command>
+    <custom_php_resync_config_command>
+        squid_report_resync();
+    </custom_php_resync_config_command>
+</packagegui>
