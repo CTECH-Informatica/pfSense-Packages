@@ -35,6 +35,14 @@ make package -C <package_folder> DISABLE_VULNERABILITIES=yes
 cp <package_folder>/work/pkg/<package>.pkg <repository_folder> 
 ```
 
+To force the build to use specific kernel destination, add on build command:
+
+```bash
+make ... OSVERSION=version
+```
+
+pfSense 2.7 base kernel version is 1400094
+
 ## Update repository
 
 ```shell
