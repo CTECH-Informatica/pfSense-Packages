@@ -30,7 +30,7 @@ require_once('service-utils.inc');
 if (file_exists('/usr/local/pkg/squid.inc')) {
     require_once('/usr/local/pkg/squid.inc');
 } else {
-    echo 'No squid.inc found. You must have Squid package installed to use Squid Report.';
+    log_error('[squidreport] No squid.inc found. You must have Squid package installed to use Squid Report.');
 }
 
 define('SQUID_REPORT_WWW', '/usr/local/www/squid_report');
@@ -77,6 +77,10 @@ function squid_report_deinstall()
     unlink_if_exists(SQUID_REPORT_NGINX_CONF);
     unlink_if_exists(SQUID_REPORT_NGINX_HTPASSWD);
     unlink_if_exists(SQUID_REPORT_RC_FILE);
+
+    config_del_path('installedpackages/squidreport');
+
+    write_config('Squid report deinstall');
 }
 
 function squid_report_validate_input(array $post, array &$input_errors)
@@ -356,8 +360,8 @@ function squid_report_setup_cron()
             break;
     }
 
-    install_cron_job(SQUID_REPORT_CRON_PARSER . ' --today', true, $minute, $hour, '*', '*', '1-5', 'root');
-    install_cron_job(SQUID_REPORT_CRON_PARSER . ' --yesterday', true, '15', '0', '*', '*', '2-6', 'root');
+    install_cron_job(SQUID_REPORT_CRON_PARSER . ' --today', true, $minute, $hour, '*', '*', '*', 'root');
+    install_cron_job(SQUID_REPORT_CRON_PARSER . ' --yesterday', true, '15', '0', '*', '*', '*', 'root');
 
     install_cron_job(SQUID_REPORT_CRON_REMOVE_OLD , true, '1', '0', '*', '*', '7', 'root');
     install_cron_job(SQUID_REPORT_CRON_DB_OPTIMIZER , true, '2', '0', '*', '*', '7', 'root');

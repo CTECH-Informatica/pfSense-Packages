@@ -55,12 +55,12 @@ function date_range($parameters): array
     throw new InvalidArgumentException('Invalid arguments for date range provided');
 }
 
-function warning_line_handler(string $line): callable
+function warning_line_handler(string $line, string $filename): callable
 {
     $line = trim($line);
 
-    return static function (int $errno, string $errstr, string $errfile, string $errline) use ($line) {
-        log_error("[squidreport] {$errno} -  {$errline}: $errstr || {$line}");
+    return static function (int $errno, string $errstr, string $errfile, string $errline) use ($line, $filename) {
+        log_error("[squidreport] {$errno} -  {$errline}: $errstr || {$line} ({$filename})");
     };
 }
 
@@ -83,12 +83,10 @@ function main()
     foreach ($files as $filename) {
         $db->beginTransaction();
 
-        echo "{$filename}\n";
-
         $fp = popen("cat {$filename}", 'r');
 
         while (($line = fgets($fp)) !== false) {
-            set_error_handler(warning_line_handler($line), E_WARNING|E_NOTICE);
+            set_error_handler(warning_line_handler($line, $filename), E_WARNING|E_NOTICE);
 
             $line = trim($line);
             $timestamp = (float)substr($line, 0, 14);
@@ -107,7 +105,7 @@ function main()
 
             if (count($split) !== 10) {
                 restore_error_handler();
-                echo "Invalid line content: '${line}'\n";
+                log_error("[squidreport] Invalid line content: '${line}' ({$filename})");
                 continue;
             }
 
@@ -142,10 +140,9 @@ function main()
 
                 $stmt_insert->execute();
             } catch (Throwable $exception) {
-                echo "\n\n";
-                echo "{$exception->getMessage()}\n";
-                echo "{$line}\n";
-                echo "\n\n";
+                log_error("[squidreport] {$line} ({$filename})");
+                log_error("[squidreport] {$exception->getMessage()}");
+                log_error("[squidreport] {$exception->getTraceAsString()}");
             }
 
             $foundLine = true;

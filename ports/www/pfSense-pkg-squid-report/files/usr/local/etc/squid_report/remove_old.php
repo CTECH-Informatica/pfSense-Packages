@@ -12,9 +12,9 @@ function main()
 {
     $db = connect_db();
 
-    $days_retain = config_get_path('installedpackages/squidreport/config/0/squid_report_logs_retain', '/var/squid/logs');
+    $days_retain = (int)config_get_path('installedpackages/squidreport/config/0/squid_report_logs_retain', 60);
 
-    delete_logs_old($days_retain);
+    delete_logs_old($db, $days_retain);
 }
 
 try {
