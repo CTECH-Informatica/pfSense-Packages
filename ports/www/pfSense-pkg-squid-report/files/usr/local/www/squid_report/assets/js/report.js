@@ -4,6 +4,8 @@ const spinnerElement = $('.spinner');
 const errorModalElement = $('#errorModal');
 const usersElement = $('#users');
 const ipsElement = $('#ips');
+const initialDateElement = $('#initial_date');
+const endDateElement = $('#end_date');
 const searchElement = $('#search');
 const pageElement = $('#page');
 
@@ -151,8 +153,10 @@ function searchWithParams(page, limit) {
     const ip = ipsElement.val();
     const user = usersElement.val();
     const search = searchElement.val();
+    const initialDate = initialDateElement.val();
+    const endDate = endDateElement.val();
 
-    loadLogs(page, limit, { ip, user, search });
+    loadLogs(page, limit, { ip, user, search, initialDate, endDate });
 }
 
 function clearListenButtons() {
@@ -201,4 +205,29 @@ $(() => {
 
     loadIps();
     loadUsers();
+
+    $('#initial_date').flatpickr({
+        enableTime: true,
+        dateFormat: 'Y-m-d H:i',
+        altInput: true,
+        altFormat: 'd/m/Y H:i',
+        ariaDateFormat: 'd/m/Y H:i',
+        time_24hr: true,
+        maxDate: new Date(),
+        locale: 'pt',
+        allowInput: true,
+        onClose: () => searchWithParams(1, limit),
+    });
+    $('#end_date').flatpickr({
+        enableTime: true,
+        dateFormat: 'Y-m-d H:i',
+        altInput: true,
+        altFormat: 'd/m/Y H:i',
+        ariaDateFormat: 'd/m/Y H:i',
+        time_24hr: true,
+        maxDate: new Date(),
+        locale: 'pt',
+        allowInput: true,
+        onClose: () => searchWithParams(1, limit),
+    });
 });

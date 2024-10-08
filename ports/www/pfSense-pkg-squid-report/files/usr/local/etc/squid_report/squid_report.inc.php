@@ -203,12 +203,23 @@ function search_logs(PDO $db, int $page = 1, int $limit = 50, array $filters = [
             $parameters['client_ip'] = $filters['ip'];
         }
 
+        if (array_key_exists('initialDate', $filters) && $filters['initialDate'] instanceof DateTimeInterface) {
+            $where[] = 'timestamp >= :initial_date';
+            $parameters['initial_date'] = $filters['initialDate']->getTimestamp();
+        }
+
+        if (array_key_exists('endDate', $filters) && $filters['endDate'] instanceof DateTimeInterface) {
+            $where[] = 'timestamp <= :end_date';
+            $parameters['end_date'] = $filters['endDate']->getTimestamp();
+        }
+
         if (count($where)) {
             $where = implode(' AND ', $where);
 
             $sql .= " WHERE {$where}";
         }
 
+        $sql .= ' ORDER BY timestamp DESC';
 
         $offset = $limit * ($page - 1);
         $sql .= " LIMIT {$limit} OFFSET {$offset}";
@@ -255,4 +266,14 @@ function search_ips(PDO $db)
         error($exception);
         throw $exception;
     }
+}
+
+function validate_date(string $date, string $format = 'Y-m-d H:i') {
+    $dateTime = DateTime::createFromFormat($format, $date);
+
+    if ($dateTime && $dateTime->format($format) === $date) {
+        return $dateTime;
+    }
+
+    return false;
 }

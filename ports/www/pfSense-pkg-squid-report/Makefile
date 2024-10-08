@@ -1,6 +1,6 @@
 
 PORTNAME=	pfSense-pkg-squid-report
-PORTVERSION=	1.0.0
+PORTVERSION=	1.1.0
 CATEGORIES=	www
 MASTER_SITES=	# empty
 DISTFILES=	# empty
@@ -28,6 +28,8 @@ do-install:
 	${MKDIR} ${STAGEDIR}${PREFIX}/www/squid_report/assets/css
 	${MKDIR} ${STAGEDIR}${PREFIX}/www/squid_report/assets/css/fonts
 	${MKDIR} ${STAGEDIR}${PREFIX}/www/squid_report/assets/js
+	${MKDIR} ${STAGEDIR}${PREFIX}/www/squid_report/assets/js/l10n
+	${MKDIR} ${STAGEDIR}${PREFIX}/www/squid_report/assets/js/l10n/flatpickr
 	${MKDIR} ${STAGEDIR}${PREFIX}/www/squid_report/assets/images
 	${MKDIR} ${STAGEDIR}${PREFIX}/etc/squid_report
 	${MKDIR} ${STAGEDIR}/etc/inc/priv
@@ -54,11 +56,17 @@ do-install:
 		${STAGEDIR}${PREFIX}/www/squid_report/assets/js
 	${INSTALL_DATA} -m 0644 ${FILESDIR}${PREFIX}/www/squid_report/assets/js/jquery.min.js \
 		${STAGEDIR}${PREFIX}/www/squid_report/assets/js
+	${INSTALL_DATA} -m 0644 ${FILESDIR}${PREFIX}/www/squid_report/assets/js/flatpickr.min.js \
+		${STAGEDIR}${PREFIX}/www/squid_report/assets/js
+	${INSTALL_DATA} -m 0644 ${FILESDIR}${PREFIX}/www/squid_report/assets/js/l10n/flatpickr/pt.js \
+		${STAGEDIR}${PREFIX}/www/squid_report/assets/js/l10n/flatpickr
 	${INSTALL_DATA} -m 0644 ${FILESDIR}${PREFIX}/www/squid_report/assets/js/report.js \
 		${STAGEDIR}${PREFIX}/www/squid_report/assets/js
 	${INSTALL_DATA} -m 0644 ${FILESDIR}${PREFIX}/www/squid_report/assets/css/bootstrap-icons.min.css \
 		${STAGEDIR}${PREFIX}/www/squid_report/assets/css
 	${INSTALL_DATA} -m 0644 ${FILESDIR}${PREFIX}/www/squid_report/assets/css/bootstrap.min.css \
+		${STAGEDIR}${PREFIX}/www/squid_report/assets/css
+	${INSTALL_DATA} -m 0644 ${FILESDIR}${PREFIX}/www/squid_report/assets/css/flatpickr.min.css \
 		${STAGEDIR}${PREFIX}/www/squid_report/assets/css
 	${INSTALL_DATA} -m 0644 ${FILESDIR}${PREFIX}/www/squid_report/assets/css/report.css \
 		${STAGEDIR}${PREFIX}/www/squid_report/assets/css

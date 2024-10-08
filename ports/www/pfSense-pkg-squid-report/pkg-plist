@@ -9,9 +9,12 @@ www/squid_report/users.php
 www/squid_report/assets/js/axios.min.js
 www/squid_report/assets/js/bootstrap.bundle.min.js
 www/squid_report/assets/js/jquery.min.js
+www/squid_report/assets/js/flatpickr.min.js
+www/squid_report/assets/js/l10n/flatpickr/pt.js
 www/squid_report/assets/js/report.js
 www/squid_report/assets/css/bootstrap-icons.min.css
 www/squid_report/assets/css/bootstrap.min.css
+www/squid_report/assets/css/flatpickr.min.css
 www/squid_report/assets/css/report.css
 www/squid_report/assets/css/fonts/bootstrap-icons.woff
 www/squid_report/assets/css/fonts/bootstrap-icons.woff2

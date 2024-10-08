@@ -34,6 +34,9 @@ try {
 
     $ip = filter_var($_GET['ip'] ?? '', FILTER_VALIDATE_IP);
 
+    $initialDate = filter_var($_GET['initialDate'] ?? '', FILTER_CALLBACK, ['options' => 'validate_date']);
+    $endDate = filter_var($_GET['endDate'] ?? '', FILTER_CALLBACK, ['options' => 'validate_date']);
+
     $db = connect_db();
 
     [$logs, $count] = search_logs(
@@ -44,6 +47,8 @@ try {
             'search' => $search,
             'user' => $user,
             'ip' => $ip,
+            'initialDate' => $initialDate,
+            'endDate' => $endDate,
         ]
     );
 

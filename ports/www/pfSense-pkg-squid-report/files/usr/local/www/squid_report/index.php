@@ -9,6 +9,7 @@
     <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap-icons.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/flatpickr.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/report.css">
 </head>
 <body>
@@ -54,6 +55,20 @@
         </div>
         <div class="col-2"></div>
         <div class="col-2"></div>
+        <div class="col-4 mb-2">
+            <div class="input-group">
+                <label for="initial_date" class="input-group-text">Data início</label>
+                <input type="text" id="initial_date" class="form-control" aria-label="Data início">
+            </div>
+        </div>
+        <div class="col-4 mb-2">
+            <div class="input-group">
+                <label for="end_date" class="input-group-text">Data fim</label>
+                <input type="text" id="end_date" class="form-control" aria-label="Data fim">
+            </div>
+        </div>
+        <div class="col-2"></div>
+        <div class="col-2"></div>
         <div class="col-8">
             <div class="input-group">
                 <label for="search" class="input-group-text">Endereço</label>
@@ -84,7 +99,7 @@
             </tbody>
         </table>
     </div>
-    
+
     <div class="mt-2">
         <nav aria-label="Páginas">
             <ul class="pagination pagination-lg">
@@ -118,9 +133,11 @@
     </div>
 </div>
 
-    <script type="text/javascript" src="assets/js/jquery.min.js"></script>
-    <script type="text/javascript" src="assets/js/bootstrap.bundle.min.js"></script>
-    <script type="text/javascript" src="assets/js/axios.min.js"></script>
-    <script type="text/javascript" src="assets/js/report.js"></script>
+<script type="text/javascript" src="assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="assets/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="assets/js/axios.min.js"></script>
+<script type="text/javascript" src="assets/js/flatpickr.min.js"></script>
+<script type="text/javascript" src="assets/js/l10n/flatpickr/pt.js"></script>
+<script type="text/javascript" src="assets/js/report.js"></script>
 </body>
 </html>

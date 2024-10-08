@@ -26,7 +26,7 @@
 	]]>
     </copyright>
     <name>squidreport</name>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <title>Squid Report: Settings</title>
     <category>Status</category>
     <include_file>/usr/local/pkg/squid-report.inc</include_file>
@@ -178,7 +178,7 @@
 				]]>
             </description>
             <type>select</type>
-            <default_value>lhp_60m</default_value>
+            <default_value>lhp_2h</default_value>
             <options>
                 <option><name>10min (!)</name><value>lhp_10m</value></option>
                 <option><name>20min (!)</name><value>lhp_20m</value></option>
