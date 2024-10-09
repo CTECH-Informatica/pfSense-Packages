@@ -6,8 +6,23 @@ require_once '/usr/local/pkg/squid-report.inc';
 
 function error(Throwable $exception)
 {
-    log_error("[squidreport] {$exception->getMessage()}");
-    log_error("[squidreport] {$exception->getTraceAsString()}");
+    $file = $exception->getFile();
+    $line = $exception->getCode();
+    $code = $exception->getLine();
+    $message = $exception->getMessage();
+    $traceAsString = $exception->getTraceAsString();
+
+    log_error("[squidreport] {$message}");
+    log_error("[squidreport] {$traceAsString}");
+
+    write_log("[{$file}:{$line}] {$code} - {$message}\n\n{$traceAsString}");
+}
+
+function write_log(string $message)
+{
+    $date = (new DateTime())->format('Y-m-d H:i:s');
+
+    file_put_contents(SQUID_REPORT_LOG_FILE, "{$date} {$message}\n", FILE_APPEND);
 }
 
 function connect_db(): PDO

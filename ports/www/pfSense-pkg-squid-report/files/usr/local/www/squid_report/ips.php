@@ -22,8 +22,7 @@ try {
             return $ip['client_ip'];
         }, $ips), JSON_THROW_ON_ERROR);
 } catch (Throwable $exception) {
-    log_error("[squidreport] {$exception->getMessage()}");
-    log_error("[squidreport] {$exception->getTraceAsString()}");
+    error($exception);
 
     http_response_code(500);
     header('HTTP/1.1 500 Internal Server Error');

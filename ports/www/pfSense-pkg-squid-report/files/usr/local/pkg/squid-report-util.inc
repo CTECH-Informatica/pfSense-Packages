@@ -66,7 +66,7 @@ if (!function_exists('config_get_path')) {
     {
         // safety check in case $path was called with null keys
         if (str_ends_with(trim($path), '/') || str_contains($path, '//')) {
-            log_error(gettext('Warning: invalid config path') . " \"{$path}\"");
+            write_log(gettext('Warning: invalid config path') . " \"{$path}\"");
             return $default;
         }
         global $config;
@@ -106,7 +106,7 @@ if (!function_exists('config_del_path')) {
     {
         // safety check in case $path was called with null keys
         if (str_ends_with(trim($path), '/') || str_contains($path, '//')) {
-            log_error(gettext('Warning: invalid config path') . " \"{$path}\"");
+            write_log(gettext('Warning: invalid config path') . " \"{$path}\"");
             return $default;
         }
         global $config;

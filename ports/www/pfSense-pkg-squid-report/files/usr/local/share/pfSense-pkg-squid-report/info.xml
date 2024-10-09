@@ -9,5 +9,8 @@
         <version>%%PKGVERSION%%</version>
         <configurationfile>squid-report.xml</configurationfile>
         <noembedded>true</noembedded>
+        <logging>
+            <logfilename>squid-report/squid_report.log</logfilename>
+        </logging>
     </package>
 </pfsensepkgs>

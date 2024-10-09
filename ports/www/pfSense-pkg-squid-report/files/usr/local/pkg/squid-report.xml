@@ -26,10 +26,12 @@
 	]]>
     </copyright>
     <name>squidreport</name>
-    <version>1.1.0</version>
+    <version>%%PKGVERSION%%</version>
     <title>Squid Report: Settings</title>
     <category>Status</category>
     <include_file>/usr/local/pkg/squid-report.inc</include_file>
+    <addedit_string>Squid Report has been created/modified.</addedit_string>
+    <delete_string>Squid Report has been deleted.</delete_string>
     <menu>
         <name>Squid Report</name>
         <tooltiptext>Squid report configuration</tooltiptext>
@@ -135,7 +137,7 @@
             <fielddescr>Links</fielddescr>
             <description>
                 <![CDATA[
-				<button type="submit" class="btn btn-info" name="navto_squid_report" id="navto_squid_report" value="Access report"><i class="fa-solid fa-right-to-bracket fa fa-sign-in icon-embed-btn"></i>Access report</button>
+				<a class="btn btn-info" href="#" id="navto_squid_report"><i class="fa-solid fa-right-to-bracket fa fa-sign-in icon-embed-btn"></i>Access report</a>
 				]]>
             </description>
         </field>
@@ -185,8 +187,8 @@
                 <option><name>30min (!)</name><value>lhp_30m</value></option>
                 <option><name>40min (*)</name><value>lhp_40m</value></option>
                 <option><name>50min (*)</name><value>lhp_50m</value></option>
-                <option><name>60min (+)</name><value>lhp_60m</value></option>
-                <option><name>2h</name><value>lhp_2h</value></option>
+                <option><name>60min (*)</name><value>lhp_60m</value></option>
+                <option><name>2h (+)</name><value>lhp_2h</value></option>
                 <option><name>3h</name><value>lhp_3h</value></option>
                 <option><name>4h</name><value>lhp_4h</value></option>
                 <option><name>6h</name><value>lhp_6h</value></option>
@@ -202,6 +204,9 @@
     <custom_php_deinstall_command>
         squid_report_deinstall();
     </custom_php_deinstall_command>
+    <custom_php_after_form_command>
+        squid_report_after_form();
+    </custom_php_after_form_command>
     <custom_php_validation_command>
         squid_report_validate_input($_POST, $input_errors);
     </custom_php_validation_command>

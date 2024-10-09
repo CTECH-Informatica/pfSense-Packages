@@ -46,6 +46,8 @@ define('SQUID_REPORT_NGINX_HTPASSWD', '/usr/local/etc/nginx/.squid_report_htpass
 define('SQUID_REPORT_CRON_PARSER', SQUID_REPORT_PHP_BIN . ' ' . SQUID_REPORT_FILES . '/parser.php');
 define('SQUID_REPORT_CRON_DB_OPTIMIZER', SQUID_REPORT_PHP_BIN . ' ' . SQUID_REPORT_FILES . '/optimize_db.php');
 define('SQUID_REPORT_CRON_REMOVE_OLD', SQUID_REPORT_PHP_BIN . ' ' . SQUID_REPORT_FILES . '/remove_old.php');
+define('SQUID_REPORT_LOG', '/var/log/squid-report');
+define('SQUID_REPORT_LOG_FILE', SQUID_REPORT_LOG . '/squid_report.log');
 
 function squid_report_install()
 {
@@ -65,44 +67,61 @@ function squid_report_deinstall()
 {
     squid_report_disable();
 
-    if (file_exists(SQUID_REPORT_WWW)) {
-        rmdir_recursive(SQUID_REPORT_WWW);
-    }
-
-    if (file_exists(SQUID_REPORT_FILES)) {
-        rmdir_recursive(SQUID_REPORT_FILES);
-    }
-
     unlink_if_exists(SQUID_REPORT_SERVICE_BIN);
     unlink_if_exists(SQUID_REPORT_NGINX_CONF);
     unlink_if_exists(SQUID_REPORT_NGINX_HTPASSWD);
     unlink_if_exists(SQUID_REPORT_RC_FILE);
+    unlink_if_exists(SQUID_REPORT_LOG_FILE);
 
-    config_del_path('installedpackages/squidreport');
+    if (is_dir(SQUID_REPORT_WWW)) {
+        rmdir_recursive(SQUID_REPORT_WWW);
+    }
 
-    write_config('Squid report deinstall');
+    if (is_dir(SQUID_REPORT_FILES)) {
+        rmdir_recursive(SQUID_REPORT_FILES);
+    }
+
+    if (is_dir(SQUID_REPORT_LOG)) {
+        rmdir_recursive(SQUID_REPORT_LOG);
+    }
+
+//    config_del_path('installedpackages/squidreport');
+//
+//    write_config('Squid report deinstall');
+}
+
+function squid_report_after_form() {
+    $access_report_href = '#';
+    $access_report_target = '_self';
+
+    $pkg_config = config_get_path('installedpackages/squidreport/config/0', []);
+
+    $server_host = explode(':', $_SERVER['HTTP_HOST'])[0];
+
+    if (!array_key_exists('squid_report_port', $pkg_config) || empty($pkg_config['squid_report_port'])) {
+        $pkg_config['squid_report_port'] = '7777';
+    }
+
+    if (array_key_exists('squid_report_enable', $pkg_config) && $pkg_config['squid_report_enable'] === 'on') {
+        $access_report_href = "http://{$server_host}:{$pkg_config['squid_report_port']}/";
+        $access_report_target = '_blank';
+    }
+
+    $js = <<<JS
+<script>
+    events.push(function() {
+        $('#navto_squid_report').attr('href', '{$access_report_href}');
+        $('#navto_squid_report').attr('target', '{$access_report_target}');
+    });
+</script>
+JS;
+
+    echo $js;
 }
 
 function squid_report_validate_input(array $post, array &$input_errors)
 {
     global $config;
-
-    if ($post['navto_squid_report'] === 'Access report') {
-        $pkg_config = config_get_path('installedpackages/squidreport/config/0', []);
-
-        if (empty($pkg_config)) {
-            return;
-        }
-
-        $server_host = explode(':', $_SERVER['HTTP_HOST'])[0];
-
-        if (empty($pkg_config['squid_report_port'])) {
-            $pkg_config['squid_report_port'] = '7777';
-        }
-
-        header("Location: http://{$server_host}:{$pkg_config['squid_report_port']}/");
-        exit;
-    }
 
     $squid_settings = config_get_path('installedpackages/squid/config/0', []);
 
@@ -197,6 +216,7 @@ function squid_report_check()
 
     $pid_file = SQUID_REPORT_RC_PID;
     $nginx_htpasswd = SQUID_REPORT_NGINX_HTPASSWD;
+    $log_file = SQUID_REPORT_LOG_FILE;
 
     $conf_template=<<<EOF
     # nginx configuration file
@@ -206,6 +226,7 @@ function squid_report_check()
 	
 	pid	{$pid_file};
 	error_log syslog:server=unix:/var/run/log,facility=local5;
+	error_log {$log_file} warn;
 	
 	events {
 	    worker_connections  1024;
