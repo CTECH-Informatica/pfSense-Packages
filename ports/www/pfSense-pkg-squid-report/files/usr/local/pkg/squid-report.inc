@@ -27,9 +27,7 @@ require_once('pfsense-utils.inc');
 require_once('pkg-utils.inc');
 require_once('service-utils.inc');
 
-if (file_exists('/usr/local/pkg/squid.inc')) {
-    require_once('/usr/local/pkg/squid.inc');
-} else {
+if (!file_exists('/usr/local/pkg/squid.inc')) {
     log_error('[squidreport] No squid.inc found. You must have Squid package installed to use Squid Report.');
 }
 
@@ -46,8 +44,8 @@ define('SQUID_REPORT_NGINX_HTPASSWD', '/usr/local/etc/nginx/.squid_report_htpass
 define('SQUID_REPORT_CRON_PARSER', SQUID_REPORT_PHP_BIN . ' ' . SQUID_REPORT_FILES . '/parser.php');
 define('SQUID_REPORT_CRON_DB_OPTIMIZER', SQUID_REPORT_PHP_BIN . ' ' . SQUID_REPORT_FILES . '/optimize_db.php');
 define('SQUID_REPORT_CRON_REMOVE_OLD', SQUID_REPORT_PHP_BIN . ' ' . SQUID_REPORT_FILES . '/remove_old.php');
-define('SQUID_REPORT_LOG', '/var/log/squid-report');
-define('SQUID_REPORT_LOG_FILE', SQUID_REPORT_LOG . '/squid_report.log');
+define('SQUID_REPORT_LOGS', '/var/log/squid-report');
+define('SQUID_REPORT_LOG_FILE', SQUID_REPORT_LOGS . '/squid_report.log');
 
 function squid_report_install()
 {
@@ -71,20 +69,25 @@ function squid_report_deinstall()
     unlink_if_exists(SQUID_REPORT_NGINX_CONF);
     unlink_if_exists(SQUID_REPORT_NGINX_HTPASSWD);
     unlink_if_exists(SQUID_REPORT_RC_FILE);
-    unlink_if_exists(SQUID_REPORT_LOG_FILE);
+//    unlink_if_exists(SQUID_REPORT_LOG_FILE);
 
     if (is_dir(SQUID_REPORT_WWW)) {
         rmdir_recursive(SQUID_REPORT_WWW);
     }
 
-    if (is_dir(SQUID_REPORT_FILES)) {
-        rmdir_recursive(SQUID_REPORT_FILES);
-    }
+    $squidReportFiles = SQUID_REPORT_FILES;
+    log_error("[squidreport] Will NOT delete Squid Report files dir '{$squidReportFiles}' to keep history. Delete manually if required.");
+//    if (is_dir(SQUID_REPORT_FILES)) {
+//        rmdir_recursive(SQUID_REPORT_FILES);
+//    }
 
-    if (is_dir(SQUID_REPORT_LOG)) {
-        rmdir_recursive(SQUID_REPORT_LOG);
-    }
+    $squidReportLogs = SQUID_REPORT_LOGS;
+    log_error("[squidreport] Will NOT delete Squid Report logs dir '{$squidReportLogs}' to keep history. Delete manually if required.");
+//    if (is_dir(SQUID_REPORT_LOG)) {
+//        rmdir_recursive(SQUID_REPORT_LOG);
+//    }
 
+    log_error('[squidreport] Will NOT delete Squid Report config to keep history. Delete manually if required.');
 //    config_del_path('installedpackages/squidreport');
 //
 //    write_config('Squid report deinstall');

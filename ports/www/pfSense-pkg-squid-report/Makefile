@@ -1,6 +1,6 @@
 
 PORTNAME=	pfSense-pkg-squid-report
-PORTVERSION=	1.1.1
+PORTVERSION=	1.1.2
 CATEGORIES=	www
 MASTER_SITES=	# empty
 DISTFILES=	# empty
@@ -89,8 +89,7 @@ do-install:
 	${INSTALL_DATA} -m 0644 ${FILESDIR}${DATADIR}/info.xml \
 		${STAGEDIR}${DATADIR}
 	@${REINPLACE_CMD} -i '' -e "s|%%PKGVERSION%%|${PKGVERSION}|" \
-		${STAGEDIR}${DATADIR}/info.xml
-	@${REINPLACE_CMD} -i '' -e "s|%%PKGVERSION%%|${PKGVERSION}|" \
-		${FILESDIR}${PREFIX}/pkg/squid-report.xml
+		${STAGEDIR}${DATADIR}/info.xml \
+		${STAGEDIR}${PREFIX}/pkg/squid-report.xml
 
 .include <bsd.port.mk>
