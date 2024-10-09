@@ -26,7 +26,7 @@
 	]]>
     </copyright>
     <name>squidreport</name>
-    <version>%%PKGVERSION%%</version>
+    <version>1.1.1</version>
     <title>Squid Report: Settings</title>
     <category>Status</category>
     <include_file>/usr/local/pkg/squid-report.inc</include_file>
