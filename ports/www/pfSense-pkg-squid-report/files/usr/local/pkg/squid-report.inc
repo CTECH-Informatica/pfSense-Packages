@@ -44,11 +44,18 @@ define('SQUID_REPORT_NGINX_HTPASSWD', '/usr/local/etc/nginx/.squid_report_htpass
 define('SQUID_REPORT_CRON_PARSER', SQUID_REPORT_PHP_BIN . ' ' . SQUID_REPORT_FILES . '/parser.php');
 define('SQUID_REPORT_CRON_DB_OPTIMIZER', SQUID_REPORT_PHP_BIN . ' ' . SQUID_REPORT_FILES . '/optimize_db.php');
 define('SQUID_REPORT_CRON_REMOVE_OLD', SQUID_REPORT_PHP_BIN . ' ' . SQUID_REPORT_FILES . '/remove_old.php');
-define('SQUID_REPORT_LOGS', '/var/log/squid-report');
+define('SQUID_REPORT_LOGS', '/var/log/squid_report');
 define('SQUID_REPORT_LOG_FILE', SQUID_REPORT_LOGS . '/squid_report.log');
 
 function squid_report_install()
 {
+    safe_mkdir(SQUID_REPORT_LOGS);
+
+    if (!file_exists(SQUID_REPORT_LOG_FILE)) {
+        file_put_contents(SQUID_REPORT_LOG_FILE, '');
+        chmod(SQUID_REPORT_LOG_FILE, 0655);
+    }
+
     try {
         require_once '/usr/local/etc/squid_report/squid_report.inc.php';
 
@@ -71,9 +78,11 @@ function squid_report_deinstall()
     unlink_if_exists(SQUID_REPORT_RC_FILE);
 //    unlink_if_exists(SQUID_REPORT_LOG_FILE);
 
-    if (is_dir(SQUID_REPORT_WWW)) {
-        rmdir_recursive(SQUID_REPORT_WWW);
-    }
+    $squidReportWww = SQUID_REPORT_WWW;
+    log_error("[squidreport] Will NOT delete Squid Report web dir '{$squidReportWww}'. Delete manually if required.");
+//    if (is_dir(SQUID_REPORT_WWW)) {
+//        rmdir_recursive(SQUID_REPORT_WWW);
+//    }
 
     $squidReportFiles = SQUID_REPORT_FILES;
     log_error("[squidreport] Will NOT delete Squid Report files dir '{$squidReportFiles}' to keep history. Delete manually if required.");

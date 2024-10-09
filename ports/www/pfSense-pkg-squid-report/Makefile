@@ -34,6 +34,7 @@ do-install:
 	${MKDIR} ${STAGEDIR}${PREFIX}/etc/squid_report
 	${MKDIR} ${STAGEDIR}/etc/inc/priv
 	${MKDIR} ${STAGEDIR}${DATADIR}
+	${MKDIR} /var/log/squid_report
 	${INSTALL_DATA} -m 0644 ${FILESDIR}${PREFIX}/pkg/squid-report.xml \
 		${STAGEDIR}${PREFIX}/pkg
 	${INSTALL_DATA} ${FILESDIR}${PREFIX}/pkg/squid-report.inc \
